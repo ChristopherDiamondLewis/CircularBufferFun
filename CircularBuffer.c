@@ -10,12 +10,7 @@
 
 #include "CircularBuffer.h"
 
-
-void peek_at_buf(CircularBuf_t *buffer)
-{
-    printf("First item in buffer is: %d\n", buffer->data[buffer->tail]);
-}
-
+//=====================================================================
 void init_buf(CircularBuf_t *buffer)
 {
     for(int i = 0 ; i < BUFFER_MAX_SIZE; i++)
@@ -27,7 +22,12 @@ void init_buf(CircularBuf_t *buffer)
     buffer->tail = 0;
     buffer->currBuffLength = 0;
 }
-
+//=====================================================================
+void peek_at_buf(CircularBuf_t *buffer)
+{
+    printf("First item in buffer is: %d\n", buffer->data[buffer->tail]);
+}
+//=====================================================================
 void print_buf(CircularBuf_t *buffer)
 {
 
@@ -46,7 +46,7 @@ void print_buf(CircularBuf_t *buffer)
     }
     
 }
-
+//=====================================================================
 void add_to_buf(CircularBuf_t *buffer, int data)
 {
 
@@ -64,6 +64,7 @@ void add_to_buf(CircularBuf_t *buffer, int data)
         buffer->currBuffLength++;
     }
 }
+//=====================================================================
 
 
 void remove_from_buf(CircularBuf_t *buffer)
