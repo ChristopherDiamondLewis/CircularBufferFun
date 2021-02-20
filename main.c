@@ -17,27 +17,32 @@ int main()
 
     init_buf(&circular_buff);
 
-    add_to_buf(&circular_buff, 42);
-    add_to_buf(&circular_buff, 73);
-    add_to_buf(&circular_buff, rand() % 100);
-    peek_at_buf(&circular_buff);
+    add_to_buf(&circular_buff, 10);
+    add_to_buf(&circular_buff, 15);
+    add_to_buf(&circular_buff, 20);
+    add_to_buf(&circular_buff, 70);
+    add_to_buf(&circular_buff, 23);
+    add_to_buf(&circular_buff, 75);
+    add_to_buf(&circular_buff, 78);
+    add_to_buf(&circular_buff, 47);
+    add_to_buf(&circular_buff, 18);
+    add_to_buf(&circular_buff, 98);
+    add_to_buf(&circular_buff, 105);
 
+    printf("Current buffer length is :%ld\n", circular_buff.currBuffLength);        
     print_buf(&circular_buff);
+    
+    printf("Current buffer length is :%ld\n", circular_buff.currBuffLength);
+    add_to_buf(&circular_buff, 412);
 
-    remove_from_buf(&circular_buff);
-    peek_at_buf(&circular_buff);
-    print_buf(&circular_buff);
 
-    add_to_buf(&circular_buff, rand() % 100);
-    add_to_buf(&circular_buff, rand() % 100);
-    add_to_buf(&circular_buff, rand() % 100);
-    add_to_buf(&circular_buff, rand() % 100);
+    peek_at_buf(&circular_buff, 7);
+    
     print_buf(&circular_buff);
+    printf("Current buffer length is :%ld\n", circular_buff.currBuffLength);
 
-    peek_at_buf(&circular_buff);
-    remove_from_buf(&circular_buff);
-    peek_at_buf(&circular_buff);
-    print_buf(&circular_buff);
+
+   
 
     return 0;
 }

@@ -42,9 +42,6 @@ typedef struct CircularBuf_t
 *
 *   @param -  buffer , of type pointer to a CircularBuf_t
 *   @param -  data   , of type int meant to be the data wanted to be added.
-*
-*   @TODO - eventually want to add 'eviction' so when trying to add data past capacity, it will overwrite
-*               data instead of failing.
 *   
 */
         void add_to_buf(CircularBuf_t *buffer, int data);
@@ -62,9 +59,9 @@ typedef struct CircularBuf_t
 *   Function that will print or 'peek' at the element located at the tail of the buffer.
 *
 *   @param -  buffer , of type pointer to a CircularBuf_t
+*   @param -  amount_to_peek, of type int, to represent how many items we want to view from the buffer.
 * 
-*   @TODO - figure out some edge cases to check before removing from the tail.
 */
-        void peek_at_buf(CircularBuf_t *buffer);
+        void peek_at_buf(CircularBuf_t *buffer, int amount_to_peek);
 
 #endif

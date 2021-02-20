@@ -10,6 +10,15 @@
 
 #include "CircularBuffer.h"
 
+typedef struct CircularBuf_t
+{
+    int data[BUFFER_MAX_SIZE];
+    int head;
+    int tail;
+    size_t currBuffLength;
+    //TODO - possibly add 'isfull' boolean.
+} CircularBuf_t;
+
 //=====================================================================
 void init_buf(CircularBuf_t *buffer)
 {
@@ -23,9 +32,29 @@ void init_buf(CircularBuf_t *buffer)
     buffer->currBuffLength = 0;
 }
 //=====================================================================
-void peek_at_buf(CircularBuf_t *buffer)
+void peek_at_buf(CircularBuf_t *buffer, int amount_to_peak)
 {
-    printf("First item in buffer is: %d\n", buffer->data[buffer->tail]);
+    printf("These are the first %d item(s) in the buffer\n\n", amount_to_peak);
+
+    int index = buffer->tail;  
+    
+    if(amount_to_peak > buffer->currBuffLength)
+    {
+        printf("Error attempted to peek more than current buffer length!\n");
+        return;
+    }
+
+    for(int i = 0 ; i < amount_to_peak; i++ , index++)
+    {
+        if(index == BUFFER_MAX_SIZE)
+        {
+            index = 0;
+        }
+
+        printf("Item at index %d is %d\n", index, buffer->data[index]);
+
+    }
+
 }
 //=====================================================================
 void print_buf(CircularBuf_t *buffer)
@@ -37,10 +66,16 @@ void print_buf(CircularBuf_t *buffer)
     }
     else
     {
+        int index = buffer->tail;
+
         printf("\t--------\n");
-        for(int i = buffer->tail; i < buffer->head; i++)
+        for(int i = 0; i < buffer->currBuffLength; i++, index++)
         {
-            printf("The buffer space %d contains the data %d\n", i , buffer->data[i]);
+            if(index == BUFFER_MAX_SIZE)
+            {
+                index = 0;
+            }
+            printf("The buffer space %d contains the data %d\n", index , buffer->data[index]);
         }
         printf("\t--------\n");
     }
@@ -50,23 +85,29 @@ void print_buf(CircularBuf_t *buffer)
 void add_to_buf(CircularBuf_t *buffer, int data)
 {
 
-    //Check if buffer is full
-    if(buffer->currBuffLength == BUFFER_MAX_SIZE)
+    //check if head at end of buffer.
+    if(buffer->head == BUFFER_MAX_SIZE)
     {
-        // if buffer is full we will not evict, just stop from adding.
-        printf("UNABLE TO ADD MORE TO BUFFER!\n");
+        buffer->head = 0;
+    }
+
+    //Check if buffer is full so we don't increment buffer length
+    if(buffer->currBuffLength >= BUFFER_MAX_SIZE)
+    {
+        printf("Added %d to buffer, at space %d\n", data, buffer->head);
+        buffer->data[buffer->head] = data;
+        buffer->head++;
+        
     }
     else
     {
-        printf("Added %d to buffer\n", data);
+        printf("Added %d to buffer, at space %d\n", data,buffer->head);
         buffer->data[buffer->head] = data;
         buffer->head++;
         buffer->currBuffLength++;
     }
 }
 //=====================================================================
-
-
 void remove_from_buf(CircularBuf_t *buffer)
 {
     printf("Removing %d from buffer\n", buffer->data[buffer->tail]);
